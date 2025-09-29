@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de QR Code - Mateus</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Gerador de QR Code Simples</h1>
+
+  <form id="qrForm">
+    <label for="qrText">Texto/URL:</label>
+    <input type="text" id="qrText" name="text" placeholder="Digite o texto ou URL aqui..." required>
+
+    <label for="qrSize">Tamanho (px):</label>
+    <input type="number" id="qrSize" name="width" value="200" min="50" max="500">
+    <input type="hidden" name="height" value="200">
+
+    <button type="submit">Gerar QR Code</button>
+  </form>
+
+  <div id="qrCodeResult">
+    <h2>QR Code Gerado:</h2>
+    <img id="qrImage" src="" alt="QR Code" style="display:none; border: 1px solid #ccc; padding: 10px;">
+  </div>
+</div>
+
+<script>
+  document.getElementById('qrForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Impede o envio tradicional do formulário
+
+      const text = document.getElementById('qrText').value;
+      const size = document.getElementById('qrSize').value;
+
+      if (text.trim() === "") {
+          alert("Por favor, digite algum texto ou URL.");
+          return;
+      }
+
+      // Cria a URL para o endpoint do QR Code
+      const imageUrl = `/generate?text=${encodeURIComponent(text)}&width=${size}&height=${size}`;
+
+      // Atualiza o atributo src da imagem
+      const qrImage = document.getElementById('qrImage');
+      qrImage.src = imageUrl;
+      qrImage.style.display = 'block'; // Mostra a imagem
+  });
+</script>
+</body>
+</html>
