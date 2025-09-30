@@ -13,7 +13,6 @@ WORKDIR /app
 # Isso substitui as linhas 11, 14, e 17
 COPY . .
 
-
 # Compila o projeto (gera o JAR dentro de /app/target)
 RUN mvn clean package -DskipTests
 
