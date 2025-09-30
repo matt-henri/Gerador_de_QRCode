@@ -1,13 +1,13 @@
 FROM ubuntu:latest AS build
 
-# Instala JDK e Maven
+# Instala JDK 21 e Maven
 RUN apt-get update && \
     apt-get install -y openjdk-21-jdk maven
 
 # Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o pom.xml primeiro (para aproveitar cache de dependências)
+# Copia o pom.xml primeiro (para cachear dependências)
 COPY pom.xml .
 
 # Baixa dependências
@@ -24,10 +24,10 @@ RUN mvn clean package -DskipTests
 FROM openjdk:21-jdk-slim
 
 WORKDIR /app
-
 EXPOSE 8080
 
-# Copia o jar gerado da primeira etapa
+# Copia o JAR gerado da fase de build
 COPY --from=build /app/target/qrcode-generator-0.0.1-SNAPSHOT.jar app.jar
 
+# Roda a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
