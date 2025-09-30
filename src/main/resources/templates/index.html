@@ -1,51 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Gerador de QR Code - Mateus</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de QR Code | Mateus</title>
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<div class="container">
-  <h1>Gerador de QR Code Simples</h1>
+<main class="container">
+  <h1>Gerador de QR Code</h1>
+  <p class="subtitle">Insira um texto ou URL e gere seu QR Code personalizado.</p>
 
   <form id="qrForm">
-    <label for="qrText">Texto/URL:</label>
-    <input type="text" id="qrText" name="text" placeholder="Digite o texto ou URL aqui..." required>
+    <div class="input-group">
+      <label for="qrText">Conteúdo do QRCode</label>
+      <input
+              type="text"
+              id="qrText"
+              name="text"
+              placeholder="Digite o site ou texto aqui"
+              required>
+    </div>
 
-    <label for="qrSize">Tamanho (px):</label>
-    <input type="number" id="qrSize" name="width" value="200" min="50" max="500">
-    <input type="hidden" name="height" value="200">
+    <div class="input-group">
+      <label for="qrSize">Tamanho (px)</label>
+      <input
+              type="number"
+              id="qrSize"
+              name="width"
+              value="250"
+              min="100"
+              max="500">
+      <input type="hidden" name="height" value="250">
+    </div>
 
-    <button type="submit">Gerar QR Code</button>
+    <button type="submit" id="generateBtn">Gerar QR Code</button>
   </form>
 
-  <div id="qrCodeResult">
-    <h2>QR Code Gerado:</h2>
-    <img id="qrImage" src="" alt="QR Code" style="display:none; border: 1px solid #ccc; padding: 10px;">
-  </div>
-</div>
+  <section id="qrCodeResult" class="hidden">
+    <h2>Resultado</h2>
+    <img id="qrImage" src="" alt="QR Code Gerado">
+    <a id="downloadLink" href="#" download="qrcode.png" class="download-btn">Baixar QR Code</a>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="currentYear"></span> Mateus | Projeto de Estudo</p>
+  </footer>
+</main>
 
 <script>
-  document.getElementById('qrForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Impede o envio tradicional do formulário
+  // Garante que o código só execute depois que o HTML estiver totalmente carregado
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicialização e Referências
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-      const text = document.getElementById('qrText').value;
-      const size = document.getElementById('qrSize').value;
+    const qrForm = document.getElementById('qrForm');
+    const qrText = document.getElementById('qrText');
+    const qrSize = document.getElementById('qrSize');
+    const qrImage = document.getElementById('qrImage');
+    const qrCodeResult = document.getElementById('qrCodeResult');
+    const downloadLink = document.getElementById('downloadLink');
 
-      if (text.trim() === "") {
-          alert("Por favor, digite algum texto ou URL.");
-          return;
-      }
+    if (qrForm) {
+      // 2. Evento de Submissão do Formulário
+      qrForm.addEventListener('submit', function(event) {
+          event.preventDefault(); // Impede o envio tradicional (que recarregaria a página)
 
-      // Cria a URL para o endpoint do QR Code
-      const imageUrl = `/generate?text=${encodeURIComponent(text)}&width=${size}&height=${size}`;
+          const text = qrText.value;
+          const size = qrSize.value;
 
-      // Atualiza o atributo src da imagem
-      const qrImage = document.getElementById('qrImage');
-      qrImage.src = imageUrl;
-      qrImage.style.display = 'block'; // Mostra a imagem
+          if (text.trim() === "") {
+              alert("Por favor, insira o conteúdo para o QR Code.");
+              return;
+          }
+
+          // 3. Comunicação com o Backend Java
+          // Monta a URL que o seu QRCodeController.java está esperando
+          const imageUrl = `/generate?text=${encodeURIComponent(text)}&width=${size}&height=${size}`;
+
+          // 4. Exibição
+          // O navegador busca a imagem nessa URL, que é devolvida pelo seu Controller
+          qrImage.src = imageUrl;
+          qrCodeResult.classList.remove('hidden'); // Mostra a área de resultado
+
+          // 5. Link de Download
+          downloadLink.href = imageUrl;
+      });
+    }
   });
 </script>
+
 </body>
 </html>

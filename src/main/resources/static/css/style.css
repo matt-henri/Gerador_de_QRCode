@@ -1,0 +1,146 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Corpo e fundo */
+body {
+  background: #f4f6f8;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container principal */
+.container {
+  background: #fff;
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Título e subtítulo */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #7f8c8d;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Grupos de input */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.input-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"] {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="number"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+/* Botão */
+button {
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #3498db;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* Seção do resultado */
+#qrCodeResult {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ecf0f1;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Estilo do título do resultado */
+#qrCodeResult h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Estilo da imagem do QR Code */
+#qrImage {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 12px;
+}
+
+/* Botão de download */
+.download-btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #2ecc71;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.download-btn:hover {
+  background: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #95a5a6;
+}
