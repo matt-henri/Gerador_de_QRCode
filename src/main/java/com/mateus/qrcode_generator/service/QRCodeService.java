@@ -33,4 +33,14 @@ public class QRCodeService {
 
         return pngOutputStream.toByteArray();
     }
+
+    public byte[] generate(String text, int width, int height) {
+        try {
+            return generateQRCodeImage(text, width, height);
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+            return new byte[0]; // Retorna um array vazio em caso de erro
+        }
+    }
+
 }
